@@ -103,6 +103,52 @@ const personGenerator = {
         }
     }`,
 
+    monthsJson: `{
+        "count": 12,
+        "list": {
+            "id_1": "января",
+            "id_2": "февраля",
+            "id_3": "марта",
+            "id_4": "апреля",
+            "id_5": "мая",
+            "id_6": "июня",
+            "id_7": "июля",
+            "id_8": "августа",
+            "id_9": "сентября",
+            "id_10": "октября",
+            "id_11": "ноября",
+            "id_12": "декабря"
+        }
+    }`,
+
+    randomMonth: function () {
+        return this.randomValue(this.monthsJson);
+    },
+
+    randomDay: function (month) {
+        let maxDay;
+        switch (month) {
+            case "февраля":
+                maxDay = 28;
+                break;
+            case "апреля":
+            case "июня":
+            case "сентября":
+            case "ноября":
+                maxDay = 30;
+                break;
+            default:
+                maxDay = 31;
+        }
+        return this.randomIntNumber(maxDay, 1);
+    },
+
+    randomBirthDate: function () {
+        const month = this.randomMonth();
+        const day = this.randomDay(month);
+        return `${day} ${month}`;
+    },
+
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
 
@@ -153,6 +199,7 @@ const personGenerator = {
         const patronymic = this.randomPatronymic(gender);
         const profession = this.randomProfession(gender);
         const birthYear = this.randomBirthYear();
+        const birthDate = this.randomBirthDate();
 
         return {
             gender,
@@ -160,7 +207,8 @@ const personGenerator = {
             surname,
             patronymic,
             profession,
-            birthYear
+            birthYear,
+            birthDate
         };
     }
 };
