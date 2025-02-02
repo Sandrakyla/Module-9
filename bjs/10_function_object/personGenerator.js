@@ -51,6 +51,58 @@ const personGenerator = {
         }
     }`,
 
+    patronymicMaleJson: `{
+        "count": 10,
+        "list": {
+            "id_1": "Иванович",
+            "id_2": "Петрович",
+            "id_3": "Сергеевич",
+            "id_4": "Александрович",
+            "id_5": "Дмитриевич",
+            "id_6": "Николаевич",
+            "id_7": "Андреевич",
+            "id_8": "Михайлович",
+            "id_9": "Владимирович",
+            "id_10": "Викторович"
+        }
+    }`,
+    patronymicFemaleJson: `{
+        "count": 10,
+        "list": {
+            "id_1": "Ивановна",
+            "id_2": "Петровна",
+            "id_3": "Сергеевна",
+            "id_4": "Александровна",
+            "id_5": "Дмитриевна",
+            "id_6": "Николаевна",
+            "id_7": "Андреевна",
+            "id_8": "Михайловна",
+            "id_9": "Владимировна",
+            "id_10": "Викторовна"
+        }
+    }`,
+
+    professionMaleJson: `{
+        "count": 5,
+        "list": {
+            "id_1": "слесарь",
+            "id_2": "солдат",
+            "id_3": "шахтёр",
+            "id_4": "инженер",
+            "id_5": "водитель"
+        }
+    }`,
+    professionFemaleJson: `{
+        "count": 5,
+        "list": {
+            "id_1": "учительница",
+            "id_2": "медсестра",
+            "id_3": "бухгалтер",
+            "id_4": "дизайнер",
+            "id_5": "повар"
+        }
+    }`,
+
     GENDER_MALE: 'Мужчина',
     GENDER_FEMALE: 'Женщина',
 
@@ -78,6 +130,18 @@ const personGenerator = {
         return gender === this.GENDER_FEMALE ? surname + "а" : surname;
     },
 
+    randomPatronymic: function (gender) {
+        return gender === this.GENDER_MALE
+            ? this.randomValue(this.patronymicMaleJson)
+            : this.randomValue(this.patronymicFemaleJson);
+    },
+
+    randomProfession: function (gender) {
+        return gender === this.GENDER_MALE
+            ? this.randomValue(this.professionMaleJson)
+            : this.randomValue(this.professionFemaleJson);
+    },
+
     randomBirthYear: function () {
         return this.randomIntNumber(2003, 1950); // Годы от 1950 до 2003
     },
@@ -86,12 +150,16 @@ const personGenerator = {
         const gender = this.randomGender();
         const firstName = this.randomFirstName(gender);
         const surname = this.randomSurname(gender);
+        const patronymic = this.randomPatronymic(gender);
+        const profession = this.randomProfession(gender);
         const birthYear = this.randomBirthYear();
 
         return {
             gender,
             firstName,
             surname,
+            patronymic,
+            profession,
             birthYear
         };
     }
