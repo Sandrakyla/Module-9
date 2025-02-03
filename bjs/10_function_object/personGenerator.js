@@ -27,12 +27,12 @@ const personGenerator = {
             "id_2": "Максим",
             "id_3": "Иван",
             "id_4": "Артем",
-            "id_5": "Дмитрий",
-            "id_6": "Никита",
+            "id_5": "Павел",
+            "id_6": "Фёдор",
             "id_7": "Михаил",
             "id_8": "Даниил",
             "id_9": "Егор",
-            "id_10": "Андрей"
+            "id_10": "Станислав"
         }
     }`,
     firstNameFemaleJson: `{
@@ -48,37 +48,6 @@ const personGenerator = {
             "id_8": "Ирина",
             "id_9": "Светлана",
             "id_10": "Виктория"
-        }
-    }`,
-
-    patronymicMaleJson: `{
-        "count": 10,
-        "list": {
-            "id_1": "Иванович",
-            "id_2": "Петрович",
-            "id_3": "Сергеевич",
-            "id_4": "Александрович",
-            "id_5": "Дмитриевич",
-            "id_6": "Николаевич",
-            "id_7": "Андреевич",
-            "id_8": "Михайлович",
-            "id_9": "Владимирович",
-            "id_10": "Викторович"
-        }
-    }`,
-    patronymicFemaleJson: `{
-        "count": 10,
-        "list": {
-            "id_1": "Ивановна",
-            "id_2": "Петровна",
-            "id_3": "Сергеевна",
-            "id_4": "Александровна",
-            "id_5": "Дмитриевна",
-            "id_6": "Николаевна",
-            "id_7": "Андреевна",
-            "id_8": "Михайловна",
-            "id_9": "Владимировна",
-            "id_10": "Викторовна"
         }
     }`,
 
@@ -120,6 +89,7 @@ const personGenerator = {
             "id_12": "декабря"
         }
     }`,
+
 
     randomMonth: function () {
         return this.randomValue(this.monthsJson);
@@ -177,9 +147,32 @@ const personGenerator = {
     },
 
     randomPatronymic: function (gender) {
-        return gender === this.GENDER_MALE
-            ? this.randomValue(this.patronymicMaleJson)
-            : this.randomValue(this.patronymicFemaleJson);
+        const maleName = this.randomValue(this.firstNameMaleJson);
+        let root;
+
+        // Обрабатываем исключения
+        switch (maleName) {
+
+            case "Павел":
+                root = "Павл";
+                break;
+                case "Михаил":
+                    root = "Михайл";
+                    break;
+            default:
+                if (maleName.endsWith("ий") || maleName.endsWith("ей")) {
+                    root = maleName.slice(0, -2); // Убираем "ий" или "ей"
+                } else {
+                    root = maleName; // Оставляем имя без изменений
+                }
+        }
+
+        // Добавляем соответствующее окончание в зависимости от пола
+        if (gender === this.GENDER_MALE) {
+            return root + "ович"; // Мужское отчество
+        } else {
+            return root + "овна"; // Женское отчество
+        }
     },
 
     randomProfession: function (gender) {

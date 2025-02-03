@@ -24,5 +24,6 @@ window.onload = function()
         document.getElementById('professionOutput').innerText = "Профессия";
         document.getElementById('birthDateOutput').innerText = "Дата рождения";
     });
+
 };
 
